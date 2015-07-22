@@ -1,0 +1,90 @@
+1.User
+.Uid
+.password
+.Name
+.DOB
+.Email
+.city
+.country
+.phone No
+
+.SignUp()
+.Follow()
+.Send_FriendRequest()
+.ChangeInfo()
+.DeleteAccount()
+
+2.Group
+.Gid
+.ownerId
+.No.Of.Members
+.CreateDate
+.Type
+.Others
+
+.CreatGroup()
+.joinGroup()
+.LeaveGroup()
+.DeleteGroup()
+
+3.Page
+.Pid
+.CreatorId
+.No.Of.Likes
+.CreateDate
+.others
+
+.creatPage()
+.LikePage()
+.UnlikePage()
+.DeletePage();
+
+4.Message
+.M_id
+.Send_Id
+.Receive_Id
+.M_Content
+.Date
+
+.SendMessage()
+.ReceiveMessage()
+.DeleteMessage()
+
+5.Post
+.P_Id
+.Type
+.content
+.date
+.others
+
+.MakePost()
+.RemovePost()
+.EditPost()
+
+6. Like
+. U_id
+. P_id
+. Date
+. others
+
+LikePost()
+
+7. Comment
+. C_Id
+.content
+.date
+.others
+
+MakeComment()
+
+8. Sahre
+.share_id
+. date
+. type
+. content
+. others
+
+.sharePost()
+.sharePage()
+.ShareGroup()
+
