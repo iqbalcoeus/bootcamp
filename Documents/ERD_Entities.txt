@@ -1,0 +1,14 @@
+Building ERD for Facebook
+
+Common Entities that i found:
+
+1. User
+2. Group
+3. Page
+4. Posts
+5. Message
+6. Like
+7. Comment
+8. Share
+
+
