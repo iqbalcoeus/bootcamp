@@ -2,15 +2,15 @@
 
 $GLOBALS['DB']=new DbHandler();
 class User{
-  var $Uid="abc";
-  var $password="123";
-  var $about="Default user info";
-  var $address="coues solutions gmbh pvt ltd";
-  var $DOB="01/01/1994";
-  var $gender="male";
-  var $email="abc@coeus-solutions.de";
-  var $fullName="ABC_Coues";
-  var $coverPhoto="/pictures/cv.png";
+  var $Uid;
+  var $passwor;
+  var $about;
+  var $address;
+  var $DOB;
+  var $gender;
+  var $email;
+  var $fullName;
+  var $coverPhoto;
   var $friendList=array();
 
   function __construct  (){
@@ -93,7 +93,7 @@ class User{
     $this->email=readline("Email Address: ");
     $this->address=readline("Enter Address");
     $this->about=readline("About ME: ");
-
+    
     echo "Info Has been updated\n\n";
   
   }
@@ -106,7 +106,7 @@ class DbHandler{
       var $arr2=array();
 
       function __construct(){
-      
+    
         $this->arr1['abc']="123";
         $this->arr1['xyz']="786";
       
@@ -133,13 +133,13 @@ class DbHandler{
       
       function addUser($user){
         
-        $this->arr1[]=$user;
+        $this->arr1_push($user);
       
       }
 
       function addPhoto($photo){
       
-        $this->arr2[]=$photo;
+        $this->arr2_push($photo);
       }
 
 }
