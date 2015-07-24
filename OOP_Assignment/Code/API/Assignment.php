@@ -19,8 +19,10 @@ class User{
  }
 
   function Login($uname,$paswd){
-  
-    if($uname==$this->Uid && $paswd==$this->password){
+
+
+    $f =$GLOBALS['DB']->LoginValidation($uname,$paswd);
+    if($f){
       
       echo "successfully Login ! Wellcome\n\n";
     }
@@ -40,9 +42,6 @@ class User{
     $this->gender=readline("Gender:");
     $this->fullName=readline("Enter your Full name:");
     $this->email=readline("Email address:");
-    //$this->address = readline("Enter your Address: ");
-    //$this->about=readline("About Me: ");
-    //$this->coverPhoto=readline("choose your cover photo:");
     
     $GLOBALS['DB']->addUser($this);
     echo "\n"; 
@@ -105,6 +104,32 @@ class DbHandler{
 
       var $arr1=array();
       var $arr2=array();
+
+      function __construct(){
+      
+        $this->arr1['abc']="123";
+        $this->arr1['xyz']="786";
+      
+      
+      }
+
+      function LoginValidation($id,$pswd){
+
+        try{
+        if($this->arr1[$id]==$pswd){
+
+          return true;
+        }
+        return false;
+      
+        }
+        catch (Exception $e){
+        
+          return false;
+        }
+      
+      }
+
       
       function addUser($user){
         
@@ -135,50 +160,16 @@ class Post{
     $this->title=readline("Enter title For photo");
     $this->description=readline("Enter Description Of Photo: ");
     $privacy=readline("Privacy for Photo : ");
-   // echo "Post has been shared\n\n";
+  
 
   }
 
   function Show (){
   
-   // echo "This is your Requested Post\n\n";
     echo "Title :".$this->title . "\n";
     echo "Description : " .$this->description ."\n";
     echo "Privacy : ". $this->privacy . "\n";
-  }
-
-  function Likes(){
-  
-  
-  }
-
-  function Comments(){
-  
-  
-  
-  }
-
-}
-
-class Links extends Post{
-
-  var $url="default url";
-
-  function __construct(){
-  
-  }
-
-  function Share(){
-    
-    echo "Url :". $this->url ."\n";
-    echo "Your Link Has been shared \n\n";
-  }
-  function Show(){
-
-    echo "Url :" .$this->url ."\n";
-    echo "Link is being show!\n\n";
-  
-  }
+  }  
 
 }
 
@@ -210,82 +201,11 @@ class Photo extends Post{
 
     parent::Share(); 
     $this->size=readline("Size of photo : ");
-    $this->format=readline("Image Format :");
-    //$title=readline("Enter title For photo");
-    //$des=readline("Enter Description Of Photo: ");
-  //  $privacy=readline("Privacy for Photo : 
+    $this->format=readline("Image Format :"); 
      echo "your Photo has been shared\n\n";
 
-    // echo "size: " .$this->size ."\n";
-    // echo "Format : " .$this->format . "\n\n";
-
   }
 
-
-}
-
-class Video extends Post {
-
-  var $length=10;
-
-  function __construct (){
-  
-  }
-  
-  function Show(){
-    echo "Playing Your video!\n\n";
-    echo "Video Length : " .$this->length ."\n";
-  
-  }
-
-  function Share(){
-
-    echo "Video Length : ".$this->length ."\n";
-
-    echo "\n\n*******Your Video has been shared************\n\n";
-  }
-
-
-}
-
-class Comment{
-
-  var $Id=0;
-  var $count=0;
-  var $content;
-
-
-  function __construct(){
-  
-    $content=new Post();
-  }
-  
-  function showComment(){
-  
-  echo "comment:". $this->content;
-
-  }
-  
-  function getCount(){
-
-    return $this->count;
-  }
-
-}
-
-class Like {
-
-  var $id=0;
-  var $count=0;
-
-  function __construct (){
-  
-  }
-  
-  function getCount(){
-    
-    return $this->count;
-  }
 
 }
 
@@ -295,23 +215,12 @@ function SharePost($obj){
       echo "\n\t Share Post Menu\n";
       echo "**************************\n";
       echo "1.Share Photo\n";
-       echo "2.share Video\n";
-      echo "3.share Link \n";
       echo "any key for Exit\n";
       $input=readline("enter your choice:  ");
 
       switch ($input){
     
       case 1:
-       // $obj=new Photo();
-        $obj->Share();
-        break;
-      case 2:
-        $obj=new Video();
-        $obj->Share();
-        break;
-      case 3:
-        $obj=new Links();
         $obj->Share();
         break;
       default:
@@ -328,8 +237,6 @@ function ShowPost($obj){
       echo "\n\t Show Post Menu\n";
       echo "**************************\n";
       echo "1.Show Photo\n";
-       echo "2.Show Video\n";
-      echo "3.Show Link \n";
       echo "any key for Exit\n";
       $input=readline("enter your choice:  ");
 
@@ -337,14 +244,6 @@ function ShowPost($obj){
     
       case 1:
        // $obj=new Photo();
-        $obj->Show();
-        break;
-      case 2:
-        $obj=new Video();
-        $obj->Show();
-        break;
-      case 3:
-        $obj=new Links();
         $obj->Show();
         break;
       default:
