@@ -81,6 +81,21 @@ function MySignup(){
   }
   else
     echo "\nUser name Already exit choose an other and try again!\n\n";
+}
+
+function addFriend(){
+
+  $friend=readline("Enter the Name of Friend: ");
+  if( $GLOBALS['user']->addFriend($friend)){
+    echo "\n" . $friend ." Added to your Friend List!";
+
+  }
+  else{
+    echo "\nSorry! ". $friend ."  can not be added to yuor friend list!";
+
+  }
+
+
 
 
 }
@@ -96,6 +111,17 @@ $u2->fullName="zeeshan";
 
 $GLOBALS['DB']->DBIntializer($u1,$u2);
 
+ function MyFriendList(){
+
+    $frind=$GLOBALS['user']->ListOfFriends();
+
+    for($i=0;$i< count($frind); $i++){
+
+      echo $frind[$i] ."\n";
+    }
+
+  }
+
 
 $myPhoto=new Photo();
 do{
@@ -105,7 +131,7 @@ do{
   echo "any other key for Exit\n";
   $input=readline("Enter your choice:");
 
-  $obj  = new User();
+  $obj= $GLOBALS['user']  = new User();
   $f=0;
 
 
@@ -125,7 +151,6 @@ do{
     }
     break;
   case 2:
-
     MySignup();
     break;
   default :
@@ -151,7 +176,7 @@ while(true){
 
   switch ($input){
   case 1:
-    $obj->FriendList();
+    MyFriendList();
     break;
   case 2:
     $obj->viewProfile();
@@ -166,7 +191,7 @@ while(true){
     ShowPost($myPhoto);
     break;
   case 6:
-    $obj->addFriend();
+    addFriend();
     break;
   default:
     exit(0);   

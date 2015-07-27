@@ -3,8 +3,9 @@ include_once("User.php");
 
 class DbHandler{
 
-      var $arr1=array();
+      var $userArr=array();
       var $arr2=array();
+      var $friend=array();
 
       function __construct(){ 
       //  $this->arr1['abc']="123";
@@ -15,21 +16,20 @@ class DbHandler{
 
       function DBIntializer($u1,$u2){
 
-        $this->arr1[]= $u1;
-        $this->arr1[]= $u2;
-
-        var_dump($this->arr1);
+        $this->userArr[]= $u1;
+        $this->userArr[]= $u2;
+        $this->friend[]="iqbal";
+        $this->friend[]="Hammad";
       
       }
 
       function LoginValidation($id,$pswd){
 
-        foreach($this->arr1 as $user){
+        foreach($this->userArr as $user){
 
 
           if($user->Uid==$id && $user->pasword==$pswd){
             return true;
-        
         
           }
         }
@@ -39,8 +39,7 @@ class DbHandler{
       }
 
       function checkUid($id){
-     // $ids = array_map(create_function('$o', 'return $o->id;'), $this->arr1);
-        foreach ($this->arr1 as $user){
+        foreach ($this->userArr as $user){
         
           if($user->Uid==$id)
             return false;
@@ -51,5 +50,25 @@ class DbHandler{
       return true;
       
       }
+
+      function addUser($user){
+
+        array_push($this->userArr, $user);
+
+      }
+      function addPhoto($photo){
+                    
+        array_push($this->arr2,$photo);
+      }
+      function addFriend($frind){
+      
+      return  array_push($this->friend,$frind);
+      }
+      function showFriends(){
+      
+      return $this->friend;
+      }
+
+
 }
 ?>

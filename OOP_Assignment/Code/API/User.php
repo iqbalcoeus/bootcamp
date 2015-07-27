@@ -16,11 +16,6 @@ class User{
   var $coverPhoto;
   var $friendList=array();
 
-  function __construct  (){
-    $this->friendList=array ("iqbal","Zeeshan","Shameer"); 
-
-    echo " \n\n\n";
-  }
 
 
   function Login($uname,$paswd){
@@ -50,23 +45,16 @@ class User{
 
   }
 
-  function addFriend(){
+  function addFriend($friend){
 
-    $name=readline("Enter friend Name :");
-    $this->friendList[]=$name;
+   return  $GLOBALS['DB']->addFriend($friend);
   }
 
-  function FriendList(){
-    echo "Friend List \n";
-    echo "*********************************\n\n"; 
-    for($x=0;$x< count($this->friendList);$x++){
-
-      print $this->friendList[$x]. "\n";
-
-    }
-    echo "*********************************\n\n";
+  function ListOfFriends(){
+ 
+    return $GLOBALS['DB']->showFriends();
+ 
   }
-
   function viewProfile(){
 
     echo "Profile \n";
@@ -93,8 +81,6 @@ class User{
     echo "Info Has been updated\n\n";
 
   }
-
-
 
 }
 
