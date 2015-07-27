@@ -3,7 +3,7 @@
 $GLOBALS['DB']=new DbHandler();
 class User{
   var $Uid;
-  var $password;
+  var $pasword;
   var $about;
   var $address;
   var $DOB;
@@ -15,17 +15,6 @@ class User{
 
   function __construct  (){
     $this->friendList=array ("iqbal","Zeeshan","Shameer"); 
-
-//    $u1=new User();
-  //  $u1->Uid="abc";
-    //$u1->password="123";
-   // $u1->fullName="iqbal";
-   // $u2=new User();
-   // $u2->Uid="xyz";
-   // $u2->password="789";
-    //$u2->fullName="zeeshan";
-
-//    $GLOBALS['DB']->DBIntializer($u1,$u2);
 
     echo " \n\n\n";
   }
@@ -39,18 +28,22 @@ class User{
   
   }
 
-  function Signup(){
+  function Signup($Uid,$password,$DOB,$gender,$fullName,$email){
   
-    $this->Uid=readline("choose user id:");
-    $this->password=readline("choose Password");
-    $this->DOB=readline("Your Date Of Birth:");
-    $this->gender=readline("Gender:");
-    $this->fullName=readline("Enter your Full name:");
-    $this->email=readline("Email address:");
-    
+    $this->Uid=$Uid;
+    $this->pasword=$password;
+    $this->DOB=$DOB;
+    $this->gender=$gender;
+    $this->fullName=$fullName;
+    $this->email=$email;
+
+   if( $GLOBALS['DB']->checkUid($Uid)){
     $GLOBALS['DB']->addUser($this);
     echo "\n"; 
-    echo "Signup successfully !\n\n";
+    return true;
+   }
+   else
+     return false;
   
   }
 
@@ -58,7 +51,6 @@ class User{
   
     $name=readline("Enter friend Name :");
     $this->friendList[]=$name;
-
     echo $name . "  Added to Your Friend List\n\n";
   
   
@@ -111,41 +103,55 @@ class DbHandler{
       var $arr2=array();
 
       function __construct(){ 
-        $this->arr1['abc']="123";
-        $this->arr1['xyz']="786";
+      //  $this->arr1['abc']="123";
+       // $this->arr1['xyz']="786";
       
       
       }
 
       function DBIntializer($u1,$u2){
 
-//    $this->arr1=array();
-        $this->arr1[]=clone $u1;
-        $this->arr1[]=clone $u2;
+        $this->arr1[]= $u1;
+        $this->arr1[]= $u2;
+
+        var_dump($this->arr1);
       
       }
 
       function LoginValidation($id,$pswd){
 
-        try{
-        if($this->arr1[$id]==$pswd){
+        foreach($this->arr1 as $user){
 
-          return true;
-        }
-        return false;
-      
-        }
-        catch (Exception $e){
+
+          if($user->Uid==$id && $user->pasword==$pswd){
+            return true;
         
-          return false;
+        
+          }
         }
+
+        return false;
       
       }
 
+      function checkUid($id){
+     // $ids = array_map(create_function('$o', 'return $o->id;'), $this->arr1);
+        foreach ($this->arr1 as $user){
+        
+          if($user->Uid==$id)
+            return false;
+        
+        
+        }
       
+      return true;
+      
+      }
+
+
       function addUser($user){
         
-        array_push($this->arr1,$user);
+        array_push($this->arr1, $user);
       
       }
 
@@ -278,13 +284,33 @@ function MyLogin(){
 
 }
 
+function MySignup(){
+
+    $signup=new User();
+    $Uid=readline("choose user id:");
+    $password=readline("choose Password");
+    $DOB=readline("Your Date Of Birth:");
+    $gender=readline("Gender:");
+    $fullName=readline("Enter your Full name:");
+    $email=readline("Email address:");
+    if( $signup->Signup($Uid,$password,$DOB,$gender,$fullName,$email)){
+    
+      echo "\nCongratulations ! signed up  successfully \n\n";
+    
+    }
+    else
+      echo "\nUser name Already exit choose an other and try again!\n\n";
+
+
+}
+
  $u1=new User();
  $u1->Uid="abc";
- $u1->password="123";
+ $u1->pasword="123";
  $u1->fullName="iqbal";
  $u2=new User();
  $u2->Uid="xyz";
- $u2->password="789";
+ $u2->pasword="789";
  $u2->fullName="zeeshan";
    
  $GLOBALS['DB']->DBIntializer($u1,$u2);
@@ -319,7 +345,7 @@ switch ($input){
     break;
   case 2:
 
-    $obj->MySignup();
+    MySignup();
     break;
   default :
           exit(0);    
