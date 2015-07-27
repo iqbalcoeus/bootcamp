@@ -3,7 +3,7 @@
 $GLOBALS['DB']=new DbHandler();
 class User{
   var $Uid;
-  var $passwor;
+  var $password;
   var $about;
   var $address;
   var $DOB;
@@ -15,22 +15,27 @@ class User{
 
   function __construct  (){
     $this->friendList=array ("iqbal","Zeeshan","Shameer"); 
+
+//    $u1=new User();
+  //  $u1->Uid="abc";
+    //$u1->password="123";
+   // $u1->fullName="iqbal";
+   // $u2=new User();
+   // $u2->Uid="xyz";
+   // $u2->password="789";
+    //$u2->fullName="zeeshan";
+
+//    $GLOBALS['DB']->DBIntializer($u1,$u2);
+
     echo " \n\n\n";
- }
+  }
+
 
   function Login($uname,$paswd){
 
 
     $f =$GLOBALS['DB']->LoginValidation($uname,$paswd);
-    if($f){
-      
-      echo "successfully Login ! Wellcome\n\n";
-    }
-    else
-    {
-      echo "Incorrect Info Try Again!\n";
-      exit(0);
-    }
+    return $f;
   
   }
 
@@ -105,11 +110,18 @@ class DbHandler{
       var $arr1=array();
       var $arr2=array();
 
-      function __construct(){
-    
+      function __construct(){ 
         $this->arr1['abc']="123";
         $this->arr1['xyz']="786";
       
+      
+      }
+
+      function DBIntializer($u1,$u2){
+
+//    $this->arr1=array();
+        $this->arr1[]=clone $u1;
+        $this->arr1[]=clone $u2;
       
       }
 
@@ -133,13 +145,13 @@ class DbHandler{
       
       function addUser($user){
         
-        $this->arr1_push($user);
+        array_push($this->arr1,$user);
       
       }
 
       function addPhoto($photo){
       
-        $this->arr2_push($photo);
+      array_push($this->arr2,$photo);
       }
 
 }
@@ -255,7 +267,31 @@ function ShowPost($obj){
 }
 
 
+function MyLogin(){
+
+  $login=new User();
+
+  $name=readline("Enter UserName : ");
+  $paswd=readline("Enter Password:  ");
+
+ return  $login->Login($name,$paswd);
+
+}
+
+ $u1=new User();
+ $u1->Uid="abc";
+ $u1->password="123";
+ $u1->fullName="iqbal";
+ $u2=new User();
+ $u2->Uid="xyz";
+ $u2->password="789";
+ $u2->fullName="zeeshan";
+   
+ $GLOBALS['DB']->DBIntializer($u1,$u2);
+    
+
 $myPhoto=new Photo();
+do{
 echo "**********Main Menu**********\n";
 echo "1.Login \n";
 echo "2.Signup \n";
@@ -263,25 +299,33 @@ echo "any other key for Exit\n";
 $input=readline("Enter your choice:");
 
 $obj  = new User();
+$f=0;
+
 
 switch ($input){
 
   case 1:
-    $uname=readline("Enter user name:  ");
-    $paswd=readline("Enter Password :  ");
-    $obj->Login($uname,$paswd);
+    if(MyLogin()){
+      
+      echo "Wellcome ! Successfully Login !\n\n ";
+
+      $f=1;
+    }
+    else{
+      $f=0;
+
+      echo "Incorrect Info ! Please Try again !\n\n";
+    }
     break;
   case 2:
 
-    $obj->Signup();
+    $obj->MySignup();
     break;
   default :
           exit(0);    
 
-
 }
-
-
+}while($f==0);
 
 while(true){
 
