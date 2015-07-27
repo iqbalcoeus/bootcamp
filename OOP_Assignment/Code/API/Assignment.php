@@ -1,273 +1,54 @@
 <?php
+include_once("User.php");
+include_once("Post.php");
+include_once("Photo.php");
+include_once("DBHandler.php");
 
 $GLOBALS['DB']=new DbHandler();
-class User{
-  var $Uid;
-  var $pasword;
-  var $about;
-  var $address;
-  var $DOB;
-  var $gender;
-  var $email;
-  var $fullName;
-  var $coverPhoto;
-  var $friendList=array();
-
-  function __construct  (){
-    $this->friendList=array ("iqbal","Zeeshan","Shameer"); 
-
-    echo " \n\n\n";
-  }
 
 
-  function Login($uname,$paswd){
-
-
-    $f =$GLOBALS['DB']->LoginValidation($uname,$paswd);
-    return $f;
-  
-  }
-
-  function Signup($Uid,$password,$DOB,$gender,$fullName,$email){
-  
-    $this->Uid=$Uid;
-    $this->pasword=$password;
-    $this->DOB=$DOB;
-    $this->gender=$gender;
-    $this->fullName=$fullName;
-    $this->email=$email;
-
-   if( $GLOBALS['DB']->checkUid($Uid)){
-    $GLOBALS['DB']->addUser($this);
-    echo "\n"; 
-    return true;
-   }
-   else
-     return false;
-  
-  }
-
-  function addFriend(){
-  
-    $name=readline("Enter friend Name :");
-    $this->friendList[]=$name;
-    echo $name . "  Added to Your Friend List\n\n";
-  
-  
-  }
-
-  function FriendList(){
-    echo "Friend List \n";
-    echo "*********************************\n\n"; 
-    for($x=0;$x< count($this->friendList);$x++){
-    
-      print $this->friendList[$x]. "\n";
-   
-    }
-   echo "*********************************\n\n";
-  }
-  
-  function viewProfile(){
-    
-    echo "Profile \n";
-    echo "*******************************\n\n";
-    echo "Name : ". $this->fullName ."\n";
-    echo "Cover Photo: ".$this->coverPhoto ."\n";
-    echo "Gender: ". $this->gender ."\n";
-    echo "Email Id : ".$this->email ."\n";
-    echo "Address : " .$this->address ."\n";
-    echo "About Me: ".$this->about ."\n";
-    echo "Date Of Birth : ".$this->DOB ."\n\n";
-    echo "********************************\n\n";
-
-  }
-  
-  function changeInfo(){
-    echo "\t\tEnter Updated Info\n";
-    echo "*********************************\n";
-    $this->fullName=readline("Enter fullname:");
-    $this->coverPhoto=readline("Update Cover Photo: ");
-    $this->email=readline("Email Address: ");
-    $this->address=readline("Enter Address");
-    $this->about=readline("About ME: ");
-    
-    echo "Info Has been updated\n\n";
-  
-  }
-
-}
-
-class DbHandler{
-
-      var $arr1=array();
-      var $arr2=array();
-
-      function __construct(){ 
-      //  $this->arr1['abc']="123";
-       // $this->arr1['xyz']="786";
-      
-      
-      }
-
-      function DBIntializer($u1,$u2){
-
-        $this->arr1[]= $u1;
-        $this->arr1[]= $u2;
-
-        var_dump($this->arr1);
-      
-      }
-
-      function LoginValidation($id,$pswd){
-
-        foreach($this->arr1 as $user){
-
-
-          if($user->Uid==$id && $user->pasword==$pswd){
-            return true;
-        
-        
-          }
-        }
-
-        return false;
-      
-      }
-
-      function checkUid($id){
-     // $ids = array_map(create_function('$o', 'return $o->id;'), $this->arr1);
-        foreach ($this->arr1 as $user){
-        
-          if($user->Uid==$id)
-            return false;
-        
-        
-        }
-      
-      return true;
-      
-      }
-
-
-      function addUser($user){
-        
-        array_push($this->arr1, $user);
-      
-      }
-
-      function addPhoto($photo){
-      
-      array_push($this->arr2,$photo);
-      }
-
-}
-
-class Post{
-
-  var $pid=0;
-  var $title="My Post";
-  var $description="nice Post";
-  var $privacy="public";
-
-  function __construct(){
-  
-    
-  }
-  function Share(){
-   
-    $this->title=readline("Enter title For photo");
-    $this->description=readline("Enter Description Of Photo: ");
-    $privacy=readline("Privacy for Photo : ");
-  
-
-  }
-
-  function Show (){
-  
-    echo "Title :".$this->title . "\n";
-    echo "Description : " .$this->description ."\n";
-    echo "Privacy : ". $this->privacy . "\n";
-  }  
-
-}
-
-class Photo extends Post{
-
-  var $size=0;
-  var $format=".png";
-
-  function __construct(){
-  
-  
-  }
-
-  function addToAlbum (){
-    $album =readline("enter name of album: ");
-    echo "added to ". $album ."\n\n";
-  }
-  function Show(){
-  
-    echo "\n Here is your Requested Photo!\n\n";
-    parent :: Show();
-    echo "size: " .$this->size ."\n";
-    echo "Format : " .$this->format . "\n";
-  
-  }
-
-  function Share(){
-
-
-    parent::Share(); 
-    $this->size=readline("Size of photo : ");
-    $this->format=readline("Image Format :"); 
-     echo "your Photo has been shared\n\n";
-
-  }
-
-
-}
 
 function SharePost($obj){
 
- while(true) {
-      echo "\n\t Share Post Menu\n";
-      echo "**************************\n";
-      echo "1.Share Photo\n";
-      echo "any key for Exit\n";
-      $input=readline("enter your choice:  ");
+  while(true) {
+    echo "\n\t Share Post Menu\n";
+    echo "**************************\n";
+    echo "1.Share Photo\n";
+    echo "any key for Exit\n";
+    $input=readline("enter your choice:  ");
 
-      switch ($input){
-    
-      case 1:
-        $obj->Share();
-        break;
-      default:
-        return; 
+    switch ($input){
 
-     }
+    case 1:
+      $obj->Share();
+      break;
+    default:
+      return; 
+
+    }
 
   }
 }
 
 function ShowPost($obj){
 
- while(true) {
-      echo "\n\t Show Post Menu\n";
-      echo "**************************\n";
-      echo "1.Show Photo\n";
-      echo "any key for Exit\n";
-      $input=readline("enter your choice:  ");
+  while(true) {
+    echo "\n\t Show Post Menu\n";
+    echo "**************************\n";
+    echo "1.Show Photo\n";
+    echo "any key for Exit\n";
+    $input=readline("enter your choice:  ");
 
-      switch ($input){
-    
-      case 1:
-       // $obj=new Photo();
-        $obj->Show();
-        break;
-      default:
-        return; 
+    switch ($input){
 
-     }
+    case 1:
+      // $obj=new Photo();
+      $obj->Show();
+      break;
+    default:
+      return; 
+
+    }
 
   }
 }
@@ -280,59 +61,59 @@ function MyLogin(){
   $name=readline("Enter UserName : ");
   $paswd=readline("Enter Password:  ");
 
- return  $login->Login($name,$paswd);
+  return  $login->Login($name,$paswd);
 
 }
 
 function MySignup(){
 
-    $signup=new User();
-    $Uid=readline("choose user id:");
-    $password=readline("choose Password");
-    $DOB=readline("Your Date Of Birth:");
-    $gender=readline("Gender:");
-    $fullName=readline("Enter your Full name:");
-    $email=readline("Email address:");
-    if( $signup->Signup($Uid,$password,$DOB,$gender,$fullName,$email)){
-    
-      echo "\nCongratulations ! signed up  successfully \n\n";
-    
-    }
-    else
-      echo "\nUser name Already exit choose an other and try again!\n\n";
+  $signup=new User();
+  $Uid=readline("choose user id:");
+  $password=readline("choose Password");
+  $DOB=readline("Your Date Of Birth:");
+  $gender=readline("Gender:");
+  $fullName=readline("Enter your Full name:");
+  $email=readline("Email address:");
+  if( $signup->Signup($Uid,$password,$DOB,$gender,$fullName,$email)){
+
+    echo "\nCongratulations ! signed up  successfully \n\n";
+
+  }
+  else
+    echo "\nUser name Already exit choose an other and try again!\n\n";
 
 
 }
 
- $u1=new User();
- $u1->Uid="abc";
- $u1->pasword="123";
- $u1->fullName="iqbal";
- $u2=new User();
- $u2->Uid="xyz";
- $u2->pasword="789";
- $u2->fullName="zeeshan";
-   
- $GLOBALS['DB']->DBIntializer($u1,$u2);
-    
+$u1=new User();
+$u1->Uid="abc";
+$u1->pasword="123";
+$u1->fullName="iqbal";
+$u2=new User();
+$u2->Uid="xyz";
+$u2->pasword="789";
+$u2->fullName="zeeshan";
+
+$GLOBALS['DB']->DBIntializer($u1,$u2);
+
 
 $myPhoto=new Photo();
 do{
-echo "**********Main Menu**********\n";
-echo "1.Login \n";
-echo "2.Signup \n";
-echo "any other key for Exit\n";
-$input=readline("Enter your choice:");
+  echo "**********Main Menu**********\n";
+  echo "1.Login \n";
+  echo "2.Signup \n";
+  echo "any other key for Exit\n";
+  $input=readline("Enter your choice:");
 
-$obj  = new User();
-$f=0;
+  $obj  = new User();
+  $f=0;
 
 
-switch ($input){
+  switch ($input){
 
   case 1:
     if(MyLogin()){
-      
+
       echo "Wellcome ! Successfully Login !\n\n ";
 
       $f=1;
@@ -348,9 +129,9 @@ switch ($input){
     MySignup();
     break;
   default :
-          exit(0);    
+    exit(0);    
 
-}
+  }
 }while($f==0);
 
 while(true){
@@ -369,26 +150,26 @@ while(true){
 
 
   switch ($input){
-    case 1:
-      $obj->FriendList();
-      break;
-    case 2:
-      $obj->viewProfile();
-      break;
-    case 3:
-      $obj->changeInfo();
-      break;
-    case 4:
-      SharePost($myPhoto);
-      break;
-    case 5:
-      ShowPost($myPhoto);
-      break;
-    case 6:
-      $obj->addFriend();
-      break;
-    default:
-      exit(0);   
+  case 1:
+    $obj->FriendList();
+    break;
+  case 2:
+    $obj->viewProfile();
+    break;
+  case 3:
+    $obj->changeInfo();
+    break;
+  case 4:
+    SharePost($myPhoto);
+    break;
+  case 5:
+    ShowPost($myPhoto);
+    break;
+  case 6:
+    $obj->addFriend();
+    break;
+  default:
+    exit(0);   
 
   } 
 
