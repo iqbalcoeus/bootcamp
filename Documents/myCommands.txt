@@ -1,0 +1,38 @@
+Commands for Shell
+
+1. Keyboard Shortcuts
+	.Up/Down arrows	
+		used to move through last executed commands
+	.CTRL+Left/CTR+Right
+		Used for jumping between the arguments of a command
+	. Home/End
+		Used to move at begining and ending of command the same result can be acheived by using CTR+A/CTR+E
+	.CTRL+U
+		It clears the complete line
+	.CTRL+K
+		It deletes the line from the position of cursor to the end of line.
+	.CTRL+W 
+		It deletes the only one word before the corsor
+	.CTRL+R
+		It search the command history for a specific keyword.
+	.Tab
+		It used for autocomplete.
+2. File Path Shorthands
+	.cd ..
+		used to move one step up in directory structure.
+	.cd -
+		used to move back into previous directory.
+3.History 
+	. !!
+		it represents last executed command.
+	.!$
+		it represents the arguments of last executed command
+	. history 
+		used to see recently executed commands.
+
+4. Expansion 
+	. {}
+		one can easily perform batch operations on multiple versions of a file using {}.
+5.Own Shortcuts
+	.alias
+		One can make own shortcut by using alias command.		
