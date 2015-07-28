@@ -20,7 +20,7 @@ class User{
 
   function Login($uname,$paswd){
 
-
+    $GLOBALS['id']=$uname;
     $f =$GLOBALS['DB']->LoginValidation($uname,$paswd);
     return $f;
 
@@ -57,29 +57,15 @@ class User{
   }
   function viewProfile(){
 
-    echo "Profile \n";
-    echo "*******************************\n\n";
-    echo "Name : ". $this->fullName ."\n";
-    echo "Cover Photo: ".$this->coverPhoto ."\n";
-    echo "Gender: ". $this->gender ."\n";
-    echo "Email Id : ".$this->email ."\n";
-    echo "Address : " .$this->address ."\n";
-    echo "About Me: ".$this->about ."\n";
-    echo "Date Of Birth : ".$this->DOB ."\n\n";
-    echo "********************************\n\n";
-  }
+      return $GLOBALS['DB']->profileInfo($GLOBALS['id']);
+ }
 
-  function changeInfo(){
-    echo "\t\tEnter Updated Info\n";
-    echo "*********************************\n";
-    $this->fullName=readline("Enter fullname:");
-    $this->coverPhoto=readline("Update Cover Photo: ");
-    $this->email=readline("Email Address: ");
-    $this->address=readline("Enter Address");
-    $this->about=readline("About ME: ");
+  function changeInfo($user){
+    
+    
 
-    echo "Info Has been updated\n\n";
-
+    return $GLOBALS['DB']->saveProfile($user,$GLOBALS['id']);
+   
   }
 
 }

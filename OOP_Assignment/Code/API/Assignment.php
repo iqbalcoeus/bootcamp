@@ -95,10 +95,59 @@ function addFriend(){
 
   }
 
+}
 
+function ViewUser(){
+
+  $user=$GLOBALS['user']->viewProfile();
+
+  echo "\nProfile Info\n";
+  echo "*****************\n";
+   echo "Name : ". $user["fullName"] ."\n";
+    echo "Cover Photo: ".$user["coverPhoto"] ."\n";
+    echo "Gender: ". $user["gender"] ."\n";
+    echo "Email Id : ".$user["email"] ."\n";
+    echo "Address : " .$user["address"] ."\n";
+    echo "About Me: ".$user["about"] ."\n";
+    echo "Date Of Birth : ".$user["DOB"] ."\n\n";
+    echo "****************\n\n";
 
 
 }
+
+
+function changeInfo(){
+
+
+      echo "\t\tEnter Updated Info\n";
+       echo "*********************************\n";
+       $fullName=readline("Enter fullname:");
+       $coverPhoto=readline("Update Cover Photo: ");
+        $email=readline("Email Address: ");
+       $address=readline("Enter Address");
+       $about=readline("About ME: ");
+        $gender=readline("Gender: ");
+       $DOB=readline("Date OF Birth : ");
+        $arr=array("fullName"=>$fullName,
+        
+                  "coverPhoto"=>$coverPhoto,
+                "email"=>$email,
+                "address"=>$address,
+                "about"=>$about,
+                "gender" =>$gender,
+             "DOB" =>$DOB );
+        if(  $GLOBALS['user']->changeInfo($arr)){
+
+          echo "Info Has been updated\n\n";
+        }
+        else
+          echo "Could not be saved !";
+
+
+}
+
+
+  
 
 $u1=new User();
 $u1->Uid="abc";
@@ -179,10 +228,10 @@ while(true){
     MyFriendList();
     break;
   case 2:
-    $obj->viewProfile();
+    ViewUser();
     break;
   case 3:
-    $obj->changeInfo();
+    changeInfo();
     break;
   case 4:
     SharePost($myPhoto);
