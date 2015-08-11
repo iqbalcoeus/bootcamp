@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * The membercount module provides a block with member count information.
+ */
+
+
+/**
+ * Implementation of hook_help().
+ */
+function about_coeus_help($path, $args) {
+  if ($path == 'admin/help#membercount') {
+    return t('To use this module, go to the block page and turn on the membercount block.');
+  }
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function about_coeus_block_info() {
+  $blocks = array();
+  
+  $blocks['count_members'] = array(
+    'info' => t('Count Members'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+  
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view().
+ */
+function about_coeus_block_view($name) {
+  
+  if ($name == 'count_members') {
+    $count = db_query('SELECT COUNT(uid) - 1 FROM {users}')->fetchField();
+    
+    $content = format_plural($count, 'This site has 1 user.', 'This site has @count users.');
+    
+    $block = array(
+      'subject' => t('Members'),
+      'content' => $content,
+    );
+    
+    return $block;
+  }
+}

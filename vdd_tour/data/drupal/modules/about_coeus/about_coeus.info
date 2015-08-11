@@ -1,0 +1,6 @@
+name = about coeus
+description = test proof of concept module
+package = Custom
+version = 7.0
+core = 7.x
+files[] = about_coeus.module

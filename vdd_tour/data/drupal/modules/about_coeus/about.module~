@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * A light-weight, customizable lightbox plugin for jQuery 1.3
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function about_menu() {
+  $items = array();
+
+  $items['about'] = array(
+    'title' => 'about',
+    'description' => 'Adjust Colorbox settings.',
+    'file' => 'colorbox.admin.inc',
+  );
+
+  return $items;
+}

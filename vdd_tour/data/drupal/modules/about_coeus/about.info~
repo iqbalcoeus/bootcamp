@@ -1,0 +1,5 @@
+name = about
+description = "this will only tell about the website."
+core = 7.x
+configure = /about
+
